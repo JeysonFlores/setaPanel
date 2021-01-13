@@ -1,0 +1,29 @@
+.titlebar {
+	background: #FFFFFF;
+	border-width: 0;
+}
+
+.stack {
+	background: #FFFFFF;
+}
+
+.uwucard {
+	padding-top: 15px;
+	padding-bottom: 20px;
+	padding-left: 30px;
+	padding-right: 30px;
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+.card {
+    border: 0;
+}
+
+.seta{
+	background: #FF5555;
+	color: white;
+}
+.seta-label {
+	color: white;
+}
