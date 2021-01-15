@@ -1,5 +1,6 @@
 using Gtk;
 //Button button;
+static int cant = 0;
 
 public static int main (string[] args) {
     Gtk.init (ref args);
@@ -17,28 +18,37 @@ public static int main (string[] args) {
         var button3  = builder.get_object ("gotophp") as Button;
         var help_button  = builder.get_object ("help") as Button;
         var info_button  = builder.get_object ("info") as Button;
-        
         var proftpd_button  = builder.get_object ("proftpd_button") as Button;
         var mysql_button  = builder.get_object ("mysql_button") as Button;
         //button = new Button.with_label ("Start counting");
         
+        var stop_all  = builder.get_object ("stop_all") as Button;
+        var restart_all  = builder.get_object ("restart_all") as Button;
+        var start_all  = builder.get_object ("start_all") as Button;
+        var reload = builder.get_object ("reload") as Button;
+        
+        var status_apache = builder.get_object ("status_apache") as Image;
+        var status_mysql = builder.get_object ("status_mysql") as Image;
+        var status_proftpd = builder.get_object ("status_proftpd") as Image;
+        
         var apache_button  = builder.get_object ("apache_button") as Button;
         apache_button.clicked.connect (() => {
-             startapache.begin (apache_button, (obj, async_res) => {
+             startapache.begin (status_apache, apache_button, stop_all, restart_all, start_all,  reload,(obj, async_res) => {
                 GLib.debug ("Finished loading.");
             });
         });
         
         proftpd_button.clicked.connect (() => {
+        
            // proftpdshutter(proftpd_button);
-           startproftpd.begin (proftpd_button, (obj, async_res) => {
+           startproftpd.begin (status_proftpd, proftpd_button, stop_all, restart_all, start_all,  reload,(obj, async_res) => {
                 GLib.debug ("Finished loading.");
             });
         });
         
         mysql_button.clicked.connect (() => {
             //mysqlshutter(mysql_button);
-            startmysql.begin (mysql_button, (obj, async_res) => {
+            startmysql.begin (status_mysql, mysql_button,  stop_all, restart_all, start_all,  reload,(obj, async_res) => {
                 GLib.debug ("Finished loading.");
             });
         });
@@ -117,8 +127,14 @@ static void infodialog( ){
 } */
 
 
-async void startapache(Button button) {
+async void startapache(Image status, Button button, Button start, Button restart, Button stop, Button reload) {
     button.set_sensitive(false);
+    start.set_sensitive(false);
+    restart.set_sensitive(false);
+    stop.set_sensitive(false);
+    reload.set_sensitive(false);
+    status.set_from_icon_name("user-away", IconSize.BUTTON);
+    cant++;
     string action = "";
     if(button.label == "Start")
         action = "start";
@@ -137,13 +153,22 @@ async void startapache(Button button) {
          print ("Status: %d\n", ls_status);
         Idle.add(() => {
             if (button.label == "Start") {
-            button.label = "Stop";
+                 button.label = "Stop";
+                 status.set_from_icon_name("user-available", IconSize.BUTTON);
             }
             else{
                 if(button.label == "Stop")
                     button.label = "Start";
+                    status.set_from_icon_name("user-busy", IconSize.BUTTON);
             }
             button.set_sensitive(true);
+            cant--;
+              if(cant==0){
+                    start.set_sensitive(true);
+                    restart.set_sensitive(true);
+                    stop.set_sensitive(true);
+                    reload.set_sensitive(true);
+                }
             return Source.REMOVE;
         });
         
@@ -154,8 +179,15 @@ async void startapache(Button button) {
     });
 }
 
-async void startmysql(Button button) {
-    button.set_sensitive(false);
+async void startmysql(Image status,Button button, Button start, Button restart, Button stop, Button reload) {
+     button.set_sensitive(false);
+    start.set_sensitive(false);
+    restart.set_sensitive(false);
+    stop.set_sensitive(false);
+    reload.set_sensitive(false);
+    //status = new Image.from_icon_name("user-away", IconSize.BUTTON);
+    status.set_from_icon_name("user-away", IconSize.BUTTON);
+    cant++;
     string action = "";
     if(button.label == "Start")
         action = "start";
@@ -174,13 +206,22 @@ async void startmysql(Button button) {
          print ("Status: %d\n", ls_status);
         Idle.add(() => {
             if (button.label == "Start") {
-            button.label = "Stop";
+                 button.label = "Stop";
+                 status.set_from_icon_name("user-available", IconSize.BUTTON);
             }
             else{
                 if(button.label == "Stop")
                     button.label = "Start";
+                    status.set_from_icon_name("user-busy", IconSize.BUTTON);
             }
-            button.set_sensitive(true);
+              button.set_sensitive(true);
+              cant--;
+              if(cant==0){
+                    start.set_sensitive(true);
+                    restart.set_sensitive(true);
+                    stop.set_sensitive(true);
+                    reload.set_sensitive(true);
+                }
             return Source.REMOVE;
         });
         
@@ -191,8 +232,14 @@ async void startmysql(Button button) {
     });
 }
 
-async void startproftpd(Button button) {
+async void startproftpd(Image status, Button button, Button start, Button restart, Button stop, Button reload) {
     button.set_sensitive(false);
+    start.set_sensitive(false);
+    restart.set_sensitive(false);
+    stop.set_sensitive(false);
+    reload.set_sensitive(false);
+    status.set_from_icon_name("user-away", IconSize.BUTTON);
+    cant++;
     string action = "";
     if(button.label == "Start")
         action = "start";
@@ -211,13 +258,22 @@ async void startproftpd(Button button) {
          print ("Status: %d\n", ls_status);
         Idle.add(() => {
             if (button.label == "Start") {
-            button.label = "Stop";
+               button.label = "Stop";
+               status.set_from_icon_name("user-available", IconSize.BUTTON);
             }
             else{
                 if(button.label == "Stop")
                     button.label = "Start";
+                    status.set_from_icon_name("user-busy", IconSize.BUTTON);
             }
+            cant--;
             button.set_sensitive(true);
+            if (cant==0){
+                start.set_sensitive(true);
+                restart.set_sensitive(true);
+                stop.set_sensitive(true);
+                reload.set_sensitive(true);
+            }
             return Source.REMOVE;
         });
         
@@ -251,3 +307,5 @@ async void openxbrowser_filedir(string dir) {
         return null;
     });
 }
+
+

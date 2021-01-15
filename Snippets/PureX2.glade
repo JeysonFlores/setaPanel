@@ -11,6 +11,84 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
   </object>
+  <object class="GtkWindow">
+    <property name="can_focus">False</property>
+    <property name="default_width">440</property>
+    <property name="default_height">250</property>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="homogeneous">True</property>
+            <child>
+              <object class="GtkStackSidebar">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="stack">stack2</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkStack" id="stack2">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">0</property>
+              </object>
+              <packing>
+                <property name="name">page0</property>
+                <property name="title" translatable="yes">page0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">1</property>
+              </object>
+              <packing>
+                <property name="name">page1</property>
+                <property name="title" translatable="yes">page1</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
   <object class="GtkImage" id="image1">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -31,6 +109,7 @@
     <property name="can_focus">False</property>
     <property name="icon_name">open-menu-symbolic</property>
   </object>
+  <object class="GtkTextBuffer" id="log-buffer"/>
   <object class="GtkWindow" id="window_main">
     <property name="can_focus">False</property>
     <property name="default_width">600</property>
@@ -93,10 +172,12 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="reload">
+                <property name="name">reload</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="receives_default">False</property>
+                <property name="tooltip_text" translatable="yes">Reload server state</property>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
@@ -562,6 +643,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="receives_default">False</property>
+                        <property name="tooltip_text" translatable="yes">not working yet</property>
                         <property name="halign">center</property>
                         <property name="valign">center</property>
                         <property name="image">image1</property>
@@ -604,6 +686,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="receives_default">False</property>
+                        <property name="tooltip_text" translatable="yes">not working yet</property>
                         <property name="image">image3</property>
                         <property name="always_show_image">True</property>
                         <style>
@@ -643,6 +726,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="receives_default">False</property>
+                        <property name="tooltip_text" translatable="yes">not working yet</property>
                         <property name="image">image4</property>
                         <property name="always_show_image">True</property>
                         <style>
@@ -674,7 +758,8 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkImage">
+                  <object class="GtkImage" id="status_proftpd">
+                    <property name="name">status_proftpd</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="icon_name">user-busy</property>
@@ -685,7 +770,8 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkImage">
+                  <object class="GtkImage" id="status_mysql">
+                    <property name="name">status_mysql</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="icon_name">user-busy</property>
@@ -696,10 +782,11 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkImage">
+                  <object class="GtkImage" id="status_apache">
+                    <property name="name">status_apache</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="icon_name">mail-unread</property>
+                    <property name="icon_name">user-busy</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -748,8 +835,9 @@
                 <property name="margin_bottom">15</property>
                 <property name="homogeneous">True</property>
                 <child>
-                  <object class="GtkButton">
+                  <object class="GtkButton" id="stop_all">
                     <property name="label" translatable="yes">Stop all</property>
+                    <property name="name">stop_all</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="receives_default">False</property>
@@ -765,8 +853,9 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton">
+                  <object class="GtkButton" id="restart_all">
                     <property name="label" translatable="yes">Restart all</property>
+                    <property name="name">restart_all</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="receives_default">False</property>
@@ -778,8 +867,9 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton">
+                  <object class="GtkButton" id="start_all">
                     <property name="label" translatable="yes">Start all</property>
+                    <property name="name">start_all</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="receives_default">False</property>
@@ -933,10 +1023,12 @@
                         <property name="orientation">vertical</property>
                         <property name="homogeneous">True</property>
                         <child>
-                          <object class="GtkTextView">
+                          <object class="GtkTextView" id="log">
+                            <property name="name">log</property>
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
+                            <property name="buffer">log-buffer</property>
                             <style>
                               <class name="card"/>
                             </style>
@@ -1046,7 +1138,7 @@
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Help</property>
                 <style>
-                  <class name="h1"/>
+                  <class name="h2"/>
                 </style>
               </object>
               <packing>
@@ -1059,10 +1151,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Servers don't starting</property>
-                <style>
-                  <class name="h2"/>
-                </style>
+                <property name="label" translatable="yes"> - This app must be executed as sudo user</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -1074,7 +1163,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">This app must be executed as sudo mode</property>
+                <property name="label" translatable="yes">- If you made a change on a server outside the app</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -1086,10 +1175,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Any more issues?</property>
-                <style>
-                  <class name="h3"/>
-                </style>
+                <property name="label" translatable="yes">you must click the "reload" button</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -1178,6 +1264,7 @@
       <object class="GtkHeaderBar">
         <property name="can_focus">False</property>
         <property name="has_tooltip">True</property>
+        <property name="spacing">0</property>
         <property name="show_close_button">True</property>
         <child type="title">
           <placeholder/>
@@ -1191,15 +1278,11 @@
       <object class="GtkBox">
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox">
             <property name="can_focus">False</property>
             <property name="hexpand">False</property>
             <property name="layout_style">end</property>
-            <child>
-              <placeholder/>
-            </child>
             <child>
               <placeholder/>
             </child>
@@ -1231,7 +1314,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Seta v0.2.0</property>
+                <property name="label" translatable="yes">Seta v0.5.1</property>
                 <style>
                   <class name="h2"/>
                 </style>
@@ -1258,12 +1341,30 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Copyright  © Jeyson Antonio Flores Deras</property>
+                <property name="label" translatable="yes">Author</property>
+                <attributes>
+                  <attribute name="weight" value="bold"/>
+                </attributes>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Jeyson Antonio Flores Deras</property>
+                <attributes>
+                  <attribute name="weight" value="normal"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">4</property>
               </packing>
             </child>
           </object>
