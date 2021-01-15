@@ -13,4 +13,5 @@
 ![Screenshot](https://github.com/JeysonFlores/seta/blob/main/rep-resources/Final_Servers_2.png)
 ![Screenshot](https://github.com/JeysonFlores/seta/blob/main/rep-resources/Final_Servers_3.png)
 
-**Note:** this is not the final design, stylish, widgets and content may be different to the final version.
+**Note:** Altough these designs will be more accurate compared to the final version, some changes may occur.
+**Another note:** The log screen isn't functional yet.
