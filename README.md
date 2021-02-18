@@ -2,8 +2,16 @@
 
 > A native Linux panel for XAMPP.
 
-# Preview
+# Final Preview
+<h2> Welcome Screen </h2>
 
-![Screenshot](https://github.com/JeysonFlores/seta/blob/main/rep-resources/seta_preview.png)
+![Screenshot](https://github.com/JeysonFlores/seta/blob/main/rep-resources/Final_Welcome.png)
 
-**Note:** this is not the final design, stylish, widgets and content may be different to the final version.
+<h2> Server Screen </h2>
+
+![Screenshot](https://github.com/JeysonFlores/seta/blob/main/rep-resources/Final_Servers_1.png)
+![Screenshot](https://github.com/JeysonFlores/seta/blob/main/rep-resources/Final_Servers_2.png)
+![Screenshot](https://github.com/JeysonFlores/seta/blob/main/rep-resources/Final_Servers_3.png)
+
+**Note:** Altough these designs will be more accurate compared to the final version, some changes may occur. <br>
+**Another note:** The log screen isn't functional yet.
